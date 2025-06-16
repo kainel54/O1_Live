@@ -102,8 +102,8 @@ void AO1Player::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 		EnhancedInputComponent->BindAction(AttackAction, ETriggerEvent::Triggered, this, &AO1Player::Input_Attack);
 		EnhancedInputComponent->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AO1Player::Input_Move);
 		EnhancedInputComponent->BindAction(TurnAction, ETriggerEvent::Triggered, this, &AO1Player::Input_Turn);
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
-		//EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Started, this, &ACharacter::Jump);
+		EnhancedInputComponent->BindAction(JumpAction, ETriggerEvent::Completed, this, &ACharacter::StopJumping);
 		EnhancedInputComponent->BindAction(SkillAction, ETriggerEvent::Triggered, this, &AO1Player::Input_Skill);
 		EnhancedInputComponent->BindAction(NumberAction, ETriggerEvent::Triggered, this, &AO1Player::Input_Number);
 	}
@@ -138,7 +138,7 @@ void AO1Player::Input_Move(const FInputActionValue& InputValue)
 
 	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
 	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
-
+	
 	AddMovementInput(ForwardDirection, MovementVector.X);
 	AddMovementInput(RightDirection, MovementVector.Y);
 }
@@ -147,6 +147,11 @@ void AO1Player::Input_Turn(const FInputActionValue& InputValue)
 {
 	float XValue = InputValue.Get<float>();
 	AddControllerYawInput(XValue);
+}
+
+void AO1Player::Input_Jump(const FInputActionValue& InputValue)
+{
+
 }
 
 void AO1Player::Input_Skill(const FInputActionValue& InputValue)
