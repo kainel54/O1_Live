@@ -37,7 +37,7 @@ AO1CharacterBase::AO1CharacterBase()
 	}
 
 	// Animation
-	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Script/Engine.AnimBlueprint'/Game/ParagonAurora/Characters/Heroes/Aurora/Aurora_AnimBlueprint.Aurora_AnimBlueprint'"));
+	static ConstructorHelpers::FClassFinder<UAnimInstance> AnimInstanceRef(TEXT("/Script/Engine.AnimBlueprint'/Game/Animation/ABP_Aurora.ABP_Aurora'"));
 	if (AnimInstanceRef.Succeeded())
 	{
 		GetMesh()->SetAnimationMode(EAnimationMode::AnimationBlueprint);
