@@ -126,7 +126,7 @@ void AO1Player::SetDead()
 
 void AO1Player::Input_Attack(const FInputActionValue& InputValue)
 {
-	//ProcessComboAttack();
+	ProcessComboAttack();
 }
 
 void AO1Player::Input_Move(const FInputActionValue& InputValue)

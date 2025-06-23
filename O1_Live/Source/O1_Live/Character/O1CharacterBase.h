@@ -4,12 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Interface/O1AttackInterface.h"
 #include "O1CharacterBase.generated.h"
 
 struct FO1CharacterStat;
 
 UCLASS()
-class O1_LIVE_API AO1CharacterBase : public ACharacter
+class O1_LIVE_API AO1CharacterBase : public ACharacter, public IO1AttackInterface
 {
 	GENERATED_BODY()
 
@@ -34,17 +35,7 @@ public:
 #pragma region CharacterStat
 public:
 
-	int32 GetLevel();
-	void SetLevel(int32 InNewLevel);
-
 	void ApplyStat(const FO1CharacterStat& BaseStat, const FO1CharacterStat& ModifierStat);
-
-	// Inherited via IB1ItemInterface
-	//void TakeItem(UB1ItemData* InItemData) override;
-	/*virtual void EquipWeapon(class UB1ItemData* InItemData);
-	virtual void DrinkPotion(class UB1ItemData* InItemData);
-	virtual void ReadScroll(class UB1ItemData* InItemData);*/
-
 protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UO1CharacterStatComponent> StatComponent;
@@ -52,47 +43,43 @@ protected:
 	//UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	//TObjectPtr<class UWidgetComponent> HpBarWidgetComponent;
 
-	/*UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<class USkeletalMeshComponent> WeaponComponent;
-
-	TMap<EItemType, FOnTakeItemDelegate> TakeItemActions;*/
 #pragma endregion
 
 #pragma region Attack
 public:
-//	virtual void ProcessAttack();
-//	virtual void ProcessComboAttack();
-//
-//	virtual void ComboActionBegin();
-//	virtual void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsPropertyEnded);
-//
-//	void SetComboCheckTimer();
-//	void ComboCheck();
-//
+	virtual void ProcessComboAttack();
+
+	virtual void ComboActionBegin();
+	virtual void ComboActionEnd(class UAnimMontage* TargetMontage, bool IsPropertyEnded);
+
+	void SetComboCheckTimer();
+	void ComboCheck();
+
 	virtual void SetDead();
-	//
-	//protected:
-	//	UPROPERTY(EditAnywhere)
-	//	TObjectPtr<class UAnimMontage> AttackMontage;
-	//
-	//	UPROPERTY(EditAnywhere)
-	//	TObjectPtr<class UAnimMontage> ComboAttackMontage;
-	//
-	//	UPROPERTY(EditAnywhere)
-	//	TObjectPtr<class UAnimMontage> DeadMontage;
-	//
-	//	UPROPERTY(EditAnywhere, BlueprintReadOnly)
-	//	TObjectPtr<class UB1ComboActionData> ComboAttackData;
-	//
-	//	int32 CurrentCombo = 0;
-	//	FTimerHandle ComboTimerHandle;
-	//	bool HasNextComboAttack = false;
-	//#pragma endregion
+	
+	protected:
+		UPROPERTY(EditAnywhere)
+		TObjectPtr<class UAnimMontage> AttackMontage;
+	
+		UPROPERTY(EditAnywhere)
+		TObjectPtr<class UAnimMontage> ComboAttackMontage;
+	
+		UPROPERTY(EditAnywhere)
+		TObjectPtr<class UAnimMontage> DeadMontage;
+	
+		UPROPERTY(EditAnywhere, BlueprintReadOnly)
+		TObjectPtr<class UO1ComboAttackData> ComboAttackData;
+	
+		int32 CurrentCombo = 0;
+		FTimerHandle ComboTimerHandle;
+		bool HasNextComboAttack = false;
+	#pragma endregion
 
 
-	//public:
-	//	// Inherited via IB1AttackInterface
-	//	virtual void AttackHitCheck() override;
 
+
+
+		// IO1AttackInterface을(를) 통해 상속됨
+		void AttackHitCheck() override;
 
 };
